@@ -1,0 +1,4 @@
+xst -ise "C:/Project Files/Xilinx/Experiment3/ShiftReg/ShiftReg.ise" -intstyle ise -ifn Exp3.xst -ofn Exp3.syr
+xst -ise "C:/Project Files/Xilinx/Experiment3/ShiftReg/ShiftReg.ise" -intstyle ise -ifn Exp3.xst -ofn Exp3.syr
+xst -ise "C:/Project Files/Xilinx/Experiment3/ShiftReg/ShiftReg.ise" -intstyle ise -ifn Exp3.xst -ofn Exp3.syr
+xst -ise "C:/Project Files/Xilinx/Experiment3/ShiftReg/ShiftReg.ise" -intstyle ise -ifn Exp3.xst -ofn Exp3.syr

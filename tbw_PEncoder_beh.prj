@@ -1,0 +1,2 @@
+vhdl work "PEncoder.vhd"
+vhdl work "tbw_PEncoder.vhw"

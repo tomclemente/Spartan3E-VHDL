@@ -1,0 +1,354 @@
+Release 9.1i - xst J.30
+Copyright (c) 1995-2007 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to ./xst/projnav.tmp
+CPU : 0.00 / 0.08 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 0.08 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Reading design: Exp3.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+     9.1) Device utilization summary
+     9.2) Partition Resource Summary
+     9.3) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "Exp3.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "Exp3"
+Output Format                      : NGC
+Target Device                      : xc3s500e-4-fg320
+
+---- Source Options
+Top Module Name                    : Exp3
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Multiplier Style                   : auto
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 24
+Register Duplication               : YES
+Slice Packing                      : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Yes
+Use Synchronous Set                : Yes
+Use Synchronous Reset              : Yes
+Pack IO Registers into IOBs        : auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Library Search Order               : Exp3.lso
+Keep Hierarchy                     : NO
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+Verilog 2001                       : YES
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "C:/Project Files/Xilinx/Experiment3/ShiftReg/SHIFT.vhd" in Library SFR.
+Architecture shift of Entity shift is up to date.
+Compiling vhdl file "C:/Project Files/Xilinx/Experiment3/ShiftReg/test.vhd" in Library work.
+Architecture behavioral of Entity exp3 is up to date.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <Exp3> in library <work> (architecture <behavioral>).
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <Exp3> in library <work> (Architecture <behavioral>).
+WARNING:Xst:819 - "C:/Project Files/Xilinx/Experiment3/ShiftReg/test.vhd" line 52: The following signals are missing in the process sensitivity list:
+   outputshift.
+Entity <Exp3> analyzed. Unit <Exp3> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <Exp3>.
+    Related source file is "C:/Project Files/Xilinx/Experiment3/ShiftReg/test.vhd".
+WARNING:Xst:647 - Input <inputshift<5:2>> is never used.
+WARNING:Xst:737 - Found 8-bit latch for signal <outputshift$mux0000>.
+    Found 8-bit 4-to-1 multiplexer for signal <outputshift>.
+    Summary:
+	inferred   8 Multiplexer(s).
+Unit <Exp3> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Latches                                              : 1
+ 8-bit latch                                           : 1
+# Multiplexers                                         : 8
+ 1-bit 4-to-1 multiplexer                              : 8
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Loading device for application Rf_Device from file '3s500e.nph' in environment C:\Xilinx91i.
+WARNING:Xst:1710 - FF/Latch  <0> (without init value) has a constant value of 0 in block <1>.
+WARNING:Xst:1710 - FF/Latch  <0> (without init value) has a constant value of 0 in block <2>.
+WARNING:Xst:1710 - FF/Latch  <0> (without init value) has a constant value of 0 in block <3>.
+WARNING:Xst:1710 - FF/Latch  <0> (without init value) has a constant value of 0 in block <4>.
+WARNING:Xst:1710 - FF/Latch  <0> (without init value) has a constant value of 0 in block <7>.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# Latches                                              : 1
+ 8-bit latch                                           : 1
+# Multiplexers                                         : 8
+ 1-bit 4-to-1 multiplexer                              : 8
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+INFO:Xst:2261 - The FF/Latch <outputshift_mux0000_1> in Unit <Exp3> is equivalent to the following 4 FFs/Latches, which will be removed : <outputshift_mux0000_2> <outputshift_mux0000_3> <outputshift_mux0000_4> <outputshift_mux0000_7> 
+WARNING:Xst:1710 - FF/Latch  <outputshift_mux0000_1> (without init value) has a constant value of 0 in block <Exp3>.
+
+Optimizing unit <Exp3> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block Exp3, actual ratio is 0.
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Found no macro
+=========================================================================
+
+=========================================================================
+*                          Partition Report                             *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : Exp3.ngr
+Top Level Output File Name         : Exp3
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 19
+
+Cell Usage :
+# BELS                             : 10
+#      GND                         : 1
+#      LUT2                        : 1
+#      LUT3                        : 4
+#      LUT4                        : 3
+#      MUXF5                       : 1
+# FlipFlops/Latches                : 3
+#      LD_1                        : 3
+# IO Buffers                       : 15
+#      IBUF                        : 7
+#      OBUF                        : 8
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 3s500efg320-4 
+
+ Number of Slices:                       4  out of   4656     0%  
+ Number of Slice Flip Flops:             3  out of   9312     0%  
+ Number of 4 input LUTs:                 8  out of   9312     0%  
+ Number of IOs:                         19
+ Number of bonded IOBs:                 15  out of    232     6%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-------------------------------------------+-------------------------------+-------+
+Clock Signal                               | Clock buffer(FF name)         | Load  |
+-------------------------------------------+-------------------------------+-------+
+outputshift_not0001(outputshift_not00011:O)| NONE(*)(outputshift_mux0000_5)| 3     |
+-------------------------------------------+-------------------------------+-------+
+(*) This 1 clock signal(s) are generated by combinatorial logic,
+and XST is not able to identify which are the primary clock signals.
+Please use the CLOCK_SIGNAL constraint to specify the clock signal(s) generated by combinatorial logic.
+INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -4
+
+   Minimum period: No path found
+   Minimum input arrival time before clock: 2.057ns
+   Maximum output required time after clock: 5.892ns
+   Maximum combinational path delay: 6.867ns
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'outputshift_not0001'
+  Total number of paths / destination ports: 3 / 3
+-------------------------------------------------------------------------
+Offset:              2.057ns (Levels of Logic = 1)
+  Source:            inputshift<1> (PAD)
+  Destination:       outputshift_mux0000_0 (LATCH)
+  Destination Clock: outputshift_not0001 rising
+
+  Data Path: inputshift<1> to outputshift_mux0000_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             3   1.218   0.531  inputshift_1_IBUF (inputshift_1_IBUF)
+     LD_1:D                    0.308          outputshift_mux0000_0
+    ----------------------------------------
+    Total                      2.057ns (1.526ns logic, 0.531ns route)
+                                       (74.2% logic, 25.8% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'outputshift_not0001'
+  Total number of paths / destination ports: 3 / 3
+-------------------------------------------------------------------------
+Offset:              5.892ns (Levels of Logic = 3)
+  Source:            outputshift_mux0000_0 (LATCH)
+  Destination:       outputshift<0> (PAD)
+  Source Clock:      outputshift_not0001 rising
+
+  Data Path: outputshift_mux0000_0 to outputshift<0>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     LD_1:G->Q             1   0.676   0.499  outputshift_mux0000_0 (outputshift_mux0000_0)
+     LUT3:I1->O            1   0.704   0.000  Mmux_outputshift<0>_4 (N3)
+     MUXF5:I0->O           1   0.321   0.420  Mmux_outputshift<0>_2_f5 (outputshift_0_OBUF)
+     OBUF:I->O                 3.272          outputshift_0_OBUF (outputshift<0>)
+    ----------------------------------------
+    Total                      5.892ns (4.973ns logic, 0.919ns route)
+                                       (84.4% logic, 15.6% route)
+
+=========================================================================
+Timing constraint: Default path analysis
+  Total number of paths / destination ports: 22 / 6
+-------------------------------------------------------------------------
+Delay:               6.867ns (Levels of Logic = 4)
+  Source:            mode<0> (PAD)
+  Destination:       outputshift<0> (PAD)
+
+  Data Path: mode<0> to outputshift<0>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             8   1.218   0.932  mode_0_IBUF (mode_0_IBUF)
+     LUT3:I0->O            1   0.704   0.000  Mmux_outputshift<0>_3 (N21)
+     MUXF5:I1->O           1   0.321   0.420  Mmux_outputshift<0>_2_f5 (outputshift_0_OBUF)
+     OBUF:I->O                 3.272          outputshift_0_OBUF (outputshift<0>)
+    ----------------------------------------
+    Total                      6.867ns (5.515ns logic, 1.352ns route)
+                                       (80.3% logic, 19.7% route)
+
+=========================================================================
+CPU : 4.03 / 4.13 s | Elapsed : 4.00 / 4.00 s
+ 
+--> 
+
+Total memory usage is 203376 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    9 (   0 filtered)
+Number of infos    :    2 (   0 filtered)
+

@@ -1,0 +1,3 @@
+MODULE twb_test
+SUBMODULE test
+INSTANCE UUT

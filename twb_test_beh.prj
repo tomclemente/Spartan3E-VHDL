@@ -1,0 +1,3 @@
+vhdl SFR "SHIFT.vhd"
+vhdl work "test.vhd"
+vhdl work "twb_test.vhw"

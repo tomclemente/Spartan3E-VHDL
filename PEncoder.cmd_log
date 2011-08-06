@@ -1,0 +1,2 @@
+xst -ise "C:/Project Files/Xilinx/Experiment3/ShiftReg/ShiftReg.ise" -intstyle ise -ifn PEncoder.xst -ofn PEncoder.syr
+xst -ise "C:/Project Files/Xilinx/Experiment3/ShiftReg/ShiftReg.ise" -intstyle ise -ifn PEncoder.xst -ofn PEncoder.syr

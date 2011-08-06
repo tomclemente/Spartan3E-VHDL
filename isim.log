@@ -1,0 +1,39 @@
+ command line:
+   ./tbw_PEncoder_isim_beh.exe
+     -intstyle  ise
+     -ipchost  localhost
+     -ipcport  49186
+
+Sun Jul 31 17:28:53 2011
+
+Total Line Count : 41
+
+ Elaboration time : 0.015625 sec.
+
+ Estimate current memory usage : 149.025 Meg. 
+
+ Total Signals          : 5
+ Total Nets             : 10
+ Total Signal Drivers   : 3
+ Total Blocks           : 7
+ Total Primitive Blocks : 1
+ Total Processes        : 3
+ Total Traceable Variables  : 0
+ Total Scalar Nets and Variables : 10
+ntrace select -o on -n /tbw_PEncoder/i 
+ntrace select -o on -n /tbw_PEncoder/a 
+ntrace start 
+run 1000 ns 
+Simulator is doing circuit initialization process.
+Finished circuit initialization process.
+restart
+run 1000 ns 
+Simulator is doing circuit initialization process.
+Finished circuit initialization process.
+
+ Simulation time 0.046875 sec.
+
+ Estimate current memory usage : 158.2 Meg. 
+
+Sun Jul 31 21:41:03 2011
+

@@ -1,0 +1,2 @@
+vhdl SFR "ROTATE.vhd"
+vhdl work "test.vhd"
