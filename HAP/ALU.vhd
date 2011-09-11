@@ -1,10 +1,10 @@
 ----------------------------------------------------------------------------------
 -- Company: 
--- Engineer: Ryan Danielle Redula, Janine Potian, Therese Romero, Simon Buri
+-- Engineer: 
 -- 
--- Create Date:    22:34:20 08/28/2011 
+-- Create Date:    21:26:53 09/11/2011 
 -- Design Name: 
--- Module Name:    ALU - Structural 
+-- Module Name:    ALU - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -32,10 +32,11 @@ entity ALU is
            dataR2 : in  STD_LOGIC_VECTOR (7 downto 0);
            ALUMode : in  STD_LOGIC_VECTOR (2 downto 0);
            ALUen : in  STD_LOGIC_VECTOR (2 downto 0);
+           Status : out  STD_LOGIC_VECTOR (2 downto 0);
            dataOut : out  STD_LOGIC_VECTOR (7 downto 0));
 end ALU;
 
-architecture Structural of ALU is
+architecture Behavioral of ALU is
 
 component Adder8 is
     Port ( op1 : in  STD_LOGIC_VECTOR (7 downto 0);
@@ -48,7 +49,6 @@ end component;
 component SUBTRACTOR is
     Port ( op1 : in  STD_LOGIC_VECTOR (7 downto 0);
            op2 : in  STD_LOGIC_VECTOR (7 downto 0);
-           Borrow_in : in  STD_LOGIC;
            Borrow_out : out  STD_LOGIC;
            output : out  STD_LOGIC_VECTOR (7 downto 0));
 end component;
@@ -62,24 +62,26 @@ end component;
 component DIVIDER is
     Port ( op1 : in  STD_LOGIC_VECTOR (7 downto 0);
            op2 : in  STD_LOGIC_VECTOR (7 downto 0);
+			  Borrow_out : out STD_LOGIC;
            output : out  STD_LOGIC_VECTOR (7 downto 0));
 end component;
 
-component SHIFT is
+component Shift is
 	Port ( op1 : in  STD_LOGIC_VECTOR (7 downto 0);
-			 op2 : in  STD_LOGIC_VECTOR (7 downto 0);
-			 mode	: in  STD_LOGIC_VECTOR (2 downto 0);			  
-			 output : out  STD_LOGIC_VECTOR (7 downto 0));
+			op2 : in  STD_LOGIC_VECTOR (7 downto 0);
+			mode	: in  STD_LOGIC_VECTOR (2 downto 0);			  
+			output : out  STD_LOGIC_VECTOR (7 downto 0);
+			S_out: out STD_LOGIC);	
 end component;
 
-component LOGIC is
+component Logic is
 	Port ( op1 : in  STD_LOGIC_VECTOR (7 downto 0);
-          op2 : in  STD_LOGIC_VECTOR (7 downto 0);
-          mode : in STD_LOGIC_VECTOR (2 downto 0);
-          output : out  STD_LOGIC_VECTOR (7 downto 0));	  
+           op2 : in  STD_LOGIC_VECTOR (7 downto 0);
+           mode : in STD_LOGIC_VECTOR (2 downto 0);
+           output : out  STD_LOGIC_VECTOR (7 downto 0));
 end component;
 
-component Comparator is
+component comparator is
     Port ( op1 : in  STD_LOGIC_VECTOR (7 downto 0);
            op2 : in  STD_LOGIC_VECTOR (7 downto 0);
            mode : in  STD_LOGIC_VECTOR (2 downto 0);
@@ -98,56 +100,76 @@ component mux7x1_8bits is
            Output : out  STD_LOGIC_VECTOR (7 downto 0));
 end component;
 
-signal addtemp,subtemp,multtemp,divtemp,shftrottemp,logtemp,comptemp : STD_LOGIC_VECTOR(7 downto 0);
-signal carrytempout,borrowtempout : STD_LOGIC;
-signal carrytempin,borrowtempin : STD_LOGIC := '0';
+signal addtemp,subtemp,multtemp,divtemp,shiftrottemp,logtemp,comptemp : STD_LOGIC_VECTOR(7 downto 0);
+signal carrytempout,borrowtempout, dborrowtempout, shiftrottempout : STD_LOGIC;
+signal carrytempin : STD_LOGIC := '0';
 
 begin
 
 ADD: Adder8 PORT MAP(op1 => dataR1,
-						   op2 => dataR2,
+							op2 => dataR2,
 							C_in => carrytempin,
 							output => addtemp,
 							C_out => carrytempout);
-		  
+
 SUBTRACT: SUBTRACTOR PORT MAP(op1 => dataR1,
-										 op2 => dataR2,
-										 Borrow_in => borrowtempin,
-										 Borrow_out => borrowtempout,
-										 output => subtemp);
-											
+										op2 => dataR2,
+										Borrow_out => borrowtempout,
+										output => subtemp);
+										
 MULTIPLY: Multiplier PORT MAP(op1 => dataR1,
 										op2 => dataR2,
 										output => multtemp);
 										
 DIVIDE: DIVIDER PORT MAP(op1 => dataR1,
 								 op2 => dataR2,
+								 Borrow_out => dborrowtempout,
 								 output => divtemp);
-
-SHFTROT: SHIFT PORT MAP(op1 => dataR1,
-						      op2 => dataR2,
-								mode => ALUMode,
-								output => shftrottemp);
-								
-LOGICGATES: LOGIC PORT MAP(op1 => dataR1,
-								   op2 => dataR2,
+								 
+SHIFTROT: Shift PORT MAP(op1 => dataR1,
+								 op2 => dataR2,
+								 mode => ALUMode,
+								 output => shiftrottemp,
+								 S_out => shiftrottempout);
+								 
+LOGICGATES: Logic PORT MAP(op1 => dataR1,
+									op2 => dataR2,
 									mode => ALUMode,
 									output => logtemp);
-					
-COMPARE: COMPARATOR PORT MAP(op1 => dataR1,
+									
+COMPARE: comparator PORT MAP(op1 => dataR1,
 									  op2 => dataR2,
 									  mode => ALUMode,
 									  output => comptemp);
-
-MUX: Mux7x1_8bits PORT MAP(Input1 => addtemp,
+									  
+MUX: mux7x1_8bits PORT MAP(Input1 => addtemp,
 									Input2 => subtemp,
 									Input3 => multtemp,
 									Input4 => divtemp,
-									Input5 => shftrottemp,
+									Input5 => shiftrottemp,
 									Input6 => logtemp,
 									Input7 => comptemp,
-									ALUEn => ALUEn,
+									ALUEn => ALUen,
 									Output => dataOut);
+									
+--Carry Bit(2) ,Overflow Bit(1),  Zero Bit(0)--
+Status(0) <= '1' when addtemp = "00000000" and ALUen = "001" else -- if add result is 0
+			 '1' when subtemp = "00000000" and ALUen = "010" else -- if subtract result is 0
+			 '1' when multtemp = "00000000" and ALUen = "011" else -- if multiply result is 0
+			 '1' when divtemp = "00000000" and ALUen = "100" else -- if divide result is 0
+			 '1' when logtemp = "00000000" and ALUen = "110" else -- if logic result is 0
+			 '1' when comptemp = "00000000" and ALUen = "111" and ALUmode = "110"  else
+			 '1' when comptemp /= "00000000" and ALUen = "111" and ALUmode = "111"  else
+			 '0';
+Status(1) <= '1' when carrytempout = '1' and ALUen = "001" else -- if add has overflow
+			 '1' when borrowtempout = '1' and ALUen = "010" else -- if subtract has overflow
+			 '1' when dborrowtempout = '1' and ALUen = "100" else -- if divide has overflow
+			 '0' when ALUen ="110" else --The overflow flag is cleared for logical operations  
+			 '0';
+Status(2) <= '1' when shiftrottempout = '1' and ALUen = "101" else
+			 '0' when ALUen ="110" else --The carry flag is cleared for logical operations
+			 '0';
+		
 
-end Structural;
+end Behavioral;
 

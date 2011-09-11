@@ -51,7 +51,8 @@ component CU is
            RWen : out  STD_LOGIC;
            RRen : out  STD_LOGIC;
            Mux1sel : out  STD_LOGIC_VECTOR (1 downto 0);
-           Mux2sel : out  STD_LOGIC_VECTOR (1 downto 0));
+           Mux2sel : out  STD_LOGIC_VECTOR (1 downto 0);
+			  Status: in STD_LOGIC_VECTOR(2 downto 0));
 end component;
 
 component ALU is
@@ -59,6 +60,7 @@ component ALU is
            dataR2 : in  STD_LOGIC_VECTOR (7 downto 0);
            ALUMode : in  STD_LOGIC_VECTOR (2 downto 0);
            ALUen : in  STD_LOGIC_VECTOR (2 downto 0);
+			  Status : out  STD_LOGIC_VECTOR (2 downto 0);
            dataOut : out  STD_LOGIC_VECTOR (7 downto 0));
 end component;
 
@@ -132,20 +134,20 @@ signal rom_instOut : STD_LOGIC_VECTOR (15 downto 0);
 signal  cu_Mux1sel, cu_Mux2sel : STD_LOGIC_VECTOR(1 downto 0);
 signal mux1_memOut, pc_memOut, ir_memOut, ir_dataOut, ram_dataOut,
 		 gpr_dataR1, gpr_dataR2, mux2_dataOut, alu_dataOut: STD_LOGIC_VECTOR(7 downto 0);
-signal cu_ALUEn, cu_ALUMode, ir_RD, ir_R1, ir_R2 : STD_LOGIC_VECTOR(2 downto 0);
+signal cu_ALUEn, cu_ALUMode, ir_RD, ir_R1, ir_R2, alu_statusOut, cu_statusOut: STD_LOGIC_VECTOR(2 downto 0);
 signal cu_PCen, cu_GPRREn, cu_GPRWen, cu_PCLen, cu_Reset, 
 cu_RomEn, cu_RWen, cu_RRen,cu_IREn: STD_LOGIC;
 
 begin
 
 		A: CU port map(ir_opcode, Clock, Reset, alu_dataOut, cu_Reset, cu_ALUEn, cu_ALUMode, cu_PCen,
-							cu_PCLen, cu_RomEn, cu_IREn, cu_GPRREn, cu_GPRWen, cu_RWen, cu_RRen, cu_Mux1sel, cu_Mux2sel);	
+							cu_PCLen, cu_RomEn, cu_IREn, cu_GPRREn, cu_GPRWen, cu_RWen, cu_RRen, cu_Mux1sel, cu_Mux2sel,alu_statusOut);	
 		B:	IR port map(rom_instOut, cu_IRen, Clock, ir_opcode, ir_RD, ir_R1, ir_R2, ir_memOut, ir_dataOut);
 		C: ROM port map(pc_memOut, rom_instOut, cu_RomEn);
 		D: PC port map(mux1_memOut, cu_PCen, cu_PCLen, cu_Reset, Clock, pc_memOut);
 		E: RAM port map(gpr_dataR1, ir_memOut, Clock, cu_RRen, cu_RWen, ram_dataOut);
 		F: MUX2 port map(ir_dataOut, ram_dataOut, alu_dataOut, cu_Mux2sel, mux2_dataOut);
-		G: ALU port map(gpr_dataR1, gpr_dataR2, cu_ALUMode, cu_ALUEn, alu_dataOut);
+		G: ALU port map(gpr_dataR1, gpr_dataR2, cu_ALUMode, cu_ALUEn, alu_statusOut, alu_dataOut);
 		H: MUX1 port map(gpr_dataR1, gpr_dataR2, ir_memOut, cu_Mux1sel, mux1_memOut);
 		I: GPR port map(mux2_dataOut, ir_RD, ir_R1, ir_R2, cu_GPRREn, cu_GPRWen, cu_Reset, gpr_dataR1, gpr_dataR2);
 end Behavioral;

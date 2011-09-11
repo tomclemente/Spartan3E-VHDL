@@ -31,7 +31,8 @@ entity Shift is
 	Port ( op1 : in  STD_LOGIC_VECTOR (7 downto 0);
 			op2 : in  STD_LOGIC_VECTOR (7 downto 0);
 			mode	: in  STD_LOGIC_VECTOR (2 downto 0);			  
-			output : out  STD_LOGIC_VECTOR (7 downto 0));
+			output : out  STD_LOGIC_VECTOR (7 downto 0);
+			S_out: out STD_LOGIC);
 			
 end Shift;
 
@@ -56,19 +57,19 @@ begin
 					end if;
 					if mode = "000" then 									--SRL
 						Input1 := '0' & Input1(7 downto 1);
-						
+						S_out <= Input1(0);
 					elsif mode = "001" then 								--SRA
 						Input1 := Input1(7) & Input1(7 downto 1); 
-						
+						S_out <= Input1(0);	
 					elsif mode = "010" then 	
 						Input1 := Input1(6 downto 0) & '0';				--SLL
-						
+						S_out <= Input1(7);
 					elsif mode = "011" then 	
 						Input1 := Input1(6 downto 0) & Input1(7);		--ROL
-						
+						S_out <= Input1(7);	
 					elsif mode = "100" then 	
 						Input1 := Input1(0) & Input1(7 downto 1);		--ROR
-						
+						S_out <= Input1(0);	
 					else Input1 := "ZZZZZZZZ"; exit;
 					
 					end if;	

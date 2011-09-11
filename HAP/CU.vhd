@@ -44,7 +44,8 @@ entity CU is
            RWen : out  STD_LOGIC;
            RRen : out  STD_LOGIC;
            Mux1sel : out  STD_LOGIC_VECTOR (1 downto 0);
-           Mux2sel : out  STD_LOGIC_VECTOR (1 downto 0));
+           Mux2sel : out  STD_LOGIC_VECTOR (1 downto 0);
+			  Status : in STD_LOGIC_VECTOR (2 downto 0));
 end CU;
 
 architecture Behavioral of CU is
@@ -61,6 +62,7 @@ begin
 	if (Reset = '1') then
 		present_state<=fetch;
 		ResetOut <= '1';
+	
 	elsif rising_edge(Clock) then
 		present_state <= next_state;
 		ResetOut <= '0';
@@ -87,6 +89,7 @@ case present_state is
 								Mux2sel <= "00";
 								
 								opcodesig <= Opcode;
+								
 								next_state <= decode;
 								
 		---DECODE STATE--- for non-branch & non-load instructions, muxes are disabled, data is read from GPR
@@ -250,6 +253,7 @@ case present_state is
 					next_state <= store;
 				---AND, OR, NOT, XOR---
 				elsif(opcodesig < "01001") then
+					
 					ALUen <= "110";
 					ALUMode <= (opcodesig(2 downto 0) - "101");
 					PCen <= '0';
@@ -282,8 +286,8 @@ case present_state is
 				elsif(opcodesig < "11001") then
 				
 					
-					case branchOut is
-						when "00000001" =>
+					case Status(0) is
+						when '1' =>
 							PCLen <= '1';
 							PCen	<= '0';
 --						when "00000000" =>
