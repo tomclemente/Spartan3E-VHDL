@@ -37,6 +37,48 @@ architecture Behavioral of ROM is
 	type ROM_LUT is array (0 to 76) of std_logic_vector (15 downto 0);
 	constant INST: ROM_LUT := (
 
+
+--		0 => x"C80C", -- 1100 1 000 0000 1100 LI, AX, 0C			AX <= 0C 0
+--		1 => x"C903", -- 1100 1 001 0000 0011 LI, BX, 03			BX <= 03 1
+--		2 => x"3201", -- 0011 0 010 0000 0001 OR CX, AX, BX		CX <= 0F 2
+--		3 => x"2B01", -- 0010 1 011 0000 0001 AND DX, AX, BX		DX <= 00 3
+--		4 => x"3C20", -- 0011 1 100 0010 0000 NOT EX, CX			EX <= F0 4
+--		5 => x"9501", -- 1001 0 101 0000 0001 DIV FX, AX, BX		FX <= 04 5
+--		6 => x"8E11", -- 1000 1 110 0001 0001 MULT GX, BX, BX		GX <= 09 6
+--		7 => x"4F25", -- 0100 1 111 0010 0101 ADD HX, CX, FX		HX <= 13 7
+--		8 => x"5047", -- 0101 0 000 0100 0111 SUB AX, EX, HX		AX <= DD 8
+--		9 => x"1A01", -- 0001 1 010 0000 0001 ROL CX, AX, BX		CX <= EE 9 
+--		10 => x"2401", -- 0010 0 101 0000 0001 ROR EX, AX, BX		EX <= BB 10
+--		11 => x"6B24", -- 0110 1 011 0010 0100 EQ DX, CX, EX		DX <= 00 11
+--		12 => x"9B0E", -- 1001 1 011 0000 1110 BNE DX, 0E			Branch to line 14	12
+--		13 => x"CF05", -- 1100 1 111 0000 0101 LI HX, 05			HX <= 05 13
+--		14 => x"B810", -- 1011 1 000 0001 0000 J 10				jump to line 16 14
+--		15 => x"CE0B", -- 1100 1 110 0000 1011 LI GX, 0B			GX <= 0B 15
+--		16 => x"8324", -- 1000 0 011 0010 0100 NE DX, CX, EX		DX <= 01 16
+--		17 => x"1553", -- 0001 0 101 0101 0011 SL FX, FX, DX		FX <= 08 17
+--		18 => x"0D53", -- 0000 1 101 0101 0011 SRA FX, FX, DX		FX <= 04 18 
+--		19 => x"0553", -- 0000 0 101 0101 0011 SRL FX, FX, DX		FX <= 02 19 
+--		20 => x"7353", -- 0111 0 011 0101 0011 GTE DX, FX, DX		DX <= 01 20
+--		21 => x"6353", -- 0110 0 011 0101 0011 GT DX, FX, DX		DX <= 01 21
+--		22 => x"4724", -- 0100 0 111 0010 0100 XOR HX, CX, EX		HX <= 55 22
+--		23 => x"9B19", -- 1001 1 011 0001 1001 BNE DX, 19			branch to line 25 23
+--		24 => x"0D53", -- 0000 1 101 0101 0011 SRA FX, FX, DX		DX <= 01 24
+--		25 => x"7B53", -- 0111 1 011 0101 0011 LTE DX, FX, DX		DX <= 00 25
+--		26 => x"5953", -- 0101 1 001 0101 0011 LT BX, FX, DX		BX <= 00 26
+--		27 => x"A11D", -- 1010 0 001 0001 1101 BE BX, 1D			branch to line 29 27
+--		28 => x"4013", -- 0100 0 000 0001 0011 XOR AX, BX, DX		AX<= 00 28
+--		29 => x"C920", -- 1100 1 001 0010 0000 LI BX, 20			BX <= 20 29
+--		30 => x"B001", -- 1011 0 000 0000 0001 BER AX, BX			branch to line 32 30 
+--		31 => x"D800", -- 1101 1 000 0000 0000 STORE AX, 00		store contents of AX to M00 31
+--		32 => x"C923", -- 1100 1 001 0010 0011 LI BX, 23			BX <= 23 32
+--		33 => x"A801", -- 1010 1 000 0000 0001 BNER AX, BX			Branch to line 35 33
+--		34 => x"DD00", -- 1101 1 101 0000 0000 STORE FX, 00		store contents of FX to M00 => "" --  34
+--		35 => x"D600", -- 1101 0 110 0000 0000 LD GX, 00			load contents of M00 to GX 35
+--		36 => x"CC00", -- 1100 1 100 0000 0000 LI EX, 00			EX <= 00 36
+--		37 => x"C004", -- 1100 0 000 0000 0100 JR EX				jump to line 00 37
+--		OTHERS => x"FFFF" 
+--	); 
+		
 		0 => x"CB00",  --1100 1 011 0000 0000", --LI 		DX <= x00
 		1 => x"2803",  --0010 1 000 0000 0011", --AND		AX <= AX && DX
 		2 => x"2913",  --0010 1 001 0001 0011", --AND 		BX <= BX && DX
@@ -44,7 +86,7 @@ architecture Behavioral of ROM is
 		4 => x"2C43",  --0010 1 100 0100 0011", --AND 		EX <= EX && DX
 		5 => x"2D53",  --0010 1 101 0101 0011", --AND 		FX <= FX && DX
 		6 => x"2E63",  --0010 1 110 0110 0011", --AND 		GX <= GX && DX
-		7 => x"2F73",  --0010 1 111 0111 0011", --AND 		HX <= HX && DX
+		7 => x"2F73",  --0010 1 111 0111 0011", --AND 		HX <= HX && DX               				clear
 		8 => x"C805",  --1100 1 000 0000 0101", --LI 		AX <= x05
 		9 => x"CB04",  --1100 1 011 0000 0100", --LI		DX <= x04
 		10 => x"2003", --0010 0 000 0000 0011", --ROR		AX <= AX ror DX
@@ -55,7 +97,7 @@ architecture Behavioral of ROM is
 		15 => x"9913", --1001 1 001 0001 0011", --BNE		if BX == 1, PC 1<= x13 (line 19)
 		16 => x"CB14", --1100 1 011 0001 0100", --LI		DX <= x14
 		17 => x"5003", --0101 0 000 0000 0011", --SUB		AX <= AX sub DX
-		18 => x"B80B", --1011 1 000 0000 1011", --J			J to x0B (line 11)
+		18 => x"B80B", --1011 1 000 0000 1011", --J			J to x0B (line 11)							check if greater than or equal to 100
 		19 => x"CB01", --1100 1 011 0000 0001", --LI		DX <= x01
 		20 => x"2903", --0010 1 001 0000 0011", --AND		BX <= AX && DX
 		21 => x"B81A", --1011 1 000 0001 1010", --J			J to x1A (line 26)
@@ -63,9 +105,9 @@ architecture Behavioral of ROM is
 		23 => x"9003", --1001 0 000 0000 0011", --DIV		AX <= AX/DX
 		24 => x"CA1D", --1100 1 010 0001 1101", --LI		CX <= x1D 
 		25 => x"C002", --1100 0 000 0000 0010", --JR		PC <= CX (line 29)
-		26 => x"991D", --1001 1 001 0001 1101", --BNE		if BX == 1 then PC <= x1D (line 29)
+		26 => x"991D", --1001 1 001 0001 1101", --BNE		if BX == 1 then PC <= x1D (line 29) 
 		27 => x"CA16", --1100 1 010 0001 0110", --LI		CX <= x16 
-		28 => x"C022", --1100 0 000 0010 0010", --JR		PC <= CX (line 22)
+		28 => x"C022", --1100 0 000 0010 0010", --JR		PC <= CX (line 22)								check if even or odd
 		29 => x"D800", --1101 1 000 0000 0000", --STORE		Mx00 <= AX
 		30 => x"CB09", --1100 1 011 0000 1001", --LI		DX <= x09
 		31 => x"7D03", --0111 1 101 0000 0011", --LTE		FX <= AX lte DX
@@ -76,7 +118,7 @@ architecture Behavioral of ROM is
 		36 => x"6A52", --0110 1 010 0101 0010", --EQ		CX <= FX eq CX
 		37 => x"9A28", --1001 1 010 0010 1000", --BNE		if CX == 1 PC <= x28 (line 40)
 		38 => x"8C04", --1000 1 100 0000 0100", --MULT		EX <= AX mult EX
-		39 => x"B81D", --1011 1 000 0001 1101", --J			J to x1D (line 29)
+		39 => x"B81D", --1011 1 000 0001 1101", --J			J to x1D (line 29)							if 1 digit i square
 		40 => x"C900", --1100 1 001 0000 0000", --LI		BX <= x00
 		41 => x"DA01", --1101 1 010 0000 0001", --STORE		Mx01 <= CX              --change bx to cx
 		42 => x"C903", --1100 1 001 0000 0011", --LI		BX <= x03
@@ -91,7 +133,7 @@ architecture Behavioral of ROM is
 		51 => x"B502", --1011 0 101 0000 0010", --BER		if FX == 0 then PC <= CX (line 53)
 		52 => x"4E61", --0100 1 110 0110 0001", --ADD		GX <= GX + BX
 		53 => x"CDF0", --1100 1 101 1111 0000", --LI		FX <= xF0
-		54 => x"CD04", --1100 1 011 0000 0100", --LI		DX <= x04
+		54 => x"CB04", --1100 1 011 0000 0100", --LI		DX <= x04  --corrected from fx to dx
 		55 => x"CF01", --1100 1 111 0000 0001", --LI		HX <= X01
 		56 => x"2D65", --0010 1 101 0110 0101", --AND		FX <= GX && FX
 		57 => x"0557", --0000 0 101 0101 0111", --SRL		FX <= FX srl HX

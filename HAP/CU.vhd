@@ -290,9 +290,6 @@ case present_state is
 						when '1' =>
 							PCLen <= '1';
 							PCen	<= '0';
---						when "00000000" =>
---							PCen <= '1';
---							PCLen <= '0';
 						when others =>
 							PCen <= '0';
 							PCLen <= '0';
