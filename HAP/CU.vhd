@@ -134,7 +134,7 @@ case present_state is
 								GPRWen <= '0';
 								RWen <= '0';
 								RRen <= '0';
-								Mux1sel <= "11"; --dataR2
+								Mux1sel <= "10"; --dataR2
 								Mux2sel <= "00"; --disable Mux2
 								next_state <= branchexecute; 
 				---J---

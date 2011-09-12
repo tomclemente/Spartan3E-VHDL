@@ -158,17 +158,17 @@ Status(0) <= '1' when addtemp = "00000000" and ALUen = "001" else -- if add resu
 			 '1' when multtemp = "00000000" and ALUen = "011" else -- if multiply result is 0
 			 '1' when divtemp = "00000000" and ALUen = "100" else -- if divide result is 0
 			 '1' when logtemp = "00000000" and ALUen = "110" else -- if logic result is 0
-			 '1' when comptemp = "00000000" and ALUen = "111" and ALUmode = "110"  else
-			 '1' when comptemp /= "00000000" and ALUen = "111" and ALUmode = "111"  else
-			 '0';
+			 '1' when comptemp = "00000001" and ALUen = "111" and ALUmode = "110"  else
+			 '1' when comptemp = "00000001" and ALUen = "111" and ALUmode = "111"  else
+			 '0' when ALUen /= "000";
 Status(1) <= '1' when carrytempout = '1' and ALUen = "001" else -- if add has overflow
 			 '1' when borrowtempout = '1' and ALUen = "010" else -- if subtract has overflow
 			 '1' when dborrowtempout = '1' and ALUen = "100" else -- if divide has overflow
 			 '0' when ALUen ="110" else --The overflow flag is cleared for logical operations  
-			 '0';
+			 '0' when ALUen /= "000";
 Status(2) <= '1' when shiftrottempout = '1' and ALUen = "101" else
 			 '0' when ALUen ="110" else --The carry flag is cleared for logical operations
-			 '0';
+			 '0' when ALUen /= "000";
 		
 
 end Behavioral;
