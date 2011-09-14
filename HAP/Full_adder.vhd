@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    09:08:21 03/04/2010 
+-- Create Date:    11:12:54 09/14/2011 
 -- Design Name: 
--- Module Name:    FullAdder - Behavioral 
+-- Module Name:    Full_adder - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -39,8 +39,8 @@ architecture Behavioral of Full_adder is
 
 begin
 
-	Sum <= A xor B xor C_in;
-	C_out <= ((A xor B) and C_in) or (A and B);	
+Sum <= A xor B xor C_in;
+C_out <= ((A xor B) and C_in) or (A and B);	
 
 end Behavioral;
 

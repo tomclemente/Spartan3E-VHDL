@@ -31,7 +31,6 @@ entity CU is
     Port ( Opcode : in  STD_LOGIC_VECTOR (4 downto 0);
            Clock : in  STD_LOGIC;
            Reset : in  STD_LOGIC;
-			  branchOut : in STD_LOGIC_VECTOR (7 downto 0);
            ResetOut : out  STD_LOGIC;
            ALUen : out  STD_LOGIC_VECTOR(2 downto 0);
            ALUMode : out  STD_LOGIC_VECTOR(2 downto 0);
@@ -69,7 +68,7 @@ begin
 	end if;
 end process;
 
-process(present_state,Opcode,branchOut,Clock)
+process(present_state,Opcode,Clock)
 begin
 case present_state is
 		

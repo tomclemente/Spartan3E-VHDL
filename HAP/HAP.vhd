@@ -38,7 +38,6 @@ component CU is
     Port ( Opcode : in  STD_LOGIC_VECTOR (4 downto 0);
            Clock : in  STD_LOGIC;
            Reset : in  STD_LOGIC;
-			  branchOut : in STD_LOGIC_VECTOR (7 downto 0);
            ResetOut : out  STD_LOGIC;
            ALUen : out  STD_LOGIC_VECTOR(2 downto 0);
            ALUMode : out  STD_LOGIC_VECTOR(2 downto 0);
@@ -140,7 +139,7 @@ cu_RomEn, cu_RWen, cu_RRen,cu_IREn: STD_LOGIC;
 
 begin
 
-		A: CU port map(ir_opcode, Clock, Reset, alu_dataOut, cu_Reset, cu_ALUEn, cu_ALUMode, cu_PCen,
+		A: CU port map(ir_opcode, Clock, Reset, cu_Reset, cu_ALUEn, cu_ALUMode, cu_PCen,
 							cu_PCLen, cu_RomEn, cu_IREn, cu_GPRREn, cu_GPRWen, cu_RWen, cu_RRen, cu_Mux1sel, cu_Mux2sel,alu_statusOut);	
 		B:	IR port map(rom_instOut, cu_IRen, Clock, ir_opcode, ir_RD, ir_R1, ir_R2, ir_memOut, ir_dataOut);
 		C: ROM port map(pc_memOut, rom_instOut, cu_RomEn);

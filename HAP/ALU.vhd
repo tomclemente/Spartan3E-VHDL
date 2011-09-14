@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    21:26:53 09/11/2011 
+-- Create Date:    11:21:10 09/14/2011 
 -- Design Name: 
--- Module Name:    ALU - Behavioral 
+-- Module Name:    ALU - Structural 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -36,12 +36,11 @@ entity ALU is
            dataOut : out  STD_LOGIC_VECTOR (7 downto 0));
 end ALU;
 
-architecture Behavioral of ALU is
+architecture Structural of ALU is
 
 component Adder8 is
     Port ( op1 : in  STD_LOGIC_VECTOR (7 downto 0);
            op2 : in  STD_LOGIC_VECTOR (7 downto 0);
-           C_in : in  STD_LOGIC;
            output : out  STD_LOGIC_VECTOR (7 downto 0);
            C_out : out  STD_LOGIC);
 end component;
@@ -102,13 +101,11 @@ end component;
 
 signal addtemp,subtemp,multtemp,divtemp,shiftrottemp,logtemp,comptemp : STD_LOGIC_VECTOR(7 downto 0);
 signal carrytempout,borrowtempout, dborrowtempout, shiftrottempout : STD_LOGIC;
-signal carrytempin : STD_LOGIC := '0';
 
 begin
 
 ADD: Adder8 PORT MAP(op1 => dataR1,
 							op2 => dataR2,
-							C_in => carrytempin,
 							output => addtemp,
 							C_out => carrytempout);
 
@@ -140,7 +137,7 @@ LOGICGATES: Logic PORT MAP(op1 => dataR1,
 COMPARE: comparator PORT MAP(op1 => dataR1,
 									  op2 => dataR2,
 									  mode => ALUMode,
-									  output => comptemp);
+									  output =>comptemp);
 									  
 MUX: mux7x1_8bits PORT MAP(Input1 => addtemp,
 									Input2 => subtemp,
@@ -169,7 +166,6 @@ Status(1) <= '1' when carrytempout = '1' and ALUen = "001" else -- if add has ov
 Status(2) <= '1' when shiftrottempout = '1' and ALUen = "101" else
 			 '0' when ALUen ="110" else --The carry flag is cleared for logical operations
 			 '0' when ALUen /= "000";
-		
 
-end Behavioral;
+end Structural;
 

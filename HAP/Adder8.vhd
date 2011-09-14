@@ -2,7 +2,7 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    20:44:34 08/06/2011 
+-- Create Date:    11:11:32 09/14/2011 
 -- Design Name: 
 -- Module Name:    Adder8 - Structural 
 -- Project Name: 
@@ -30,7 +30,6 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 entity Adder8 is
     Port ( op1 : in  STD_LOGIC_VECTOR (7 downto 0);
            op2 : in  STD_LOGIC_VECTOR (7 downto 0);
-           C_in : in  STD_LOGIC;
            output : out  STD_LOGIC_VECTOR (7 downto 0);
            C_out : out  STD_LOGIC);
 end Adder8;
@@ -51,7 +50,7 @@ begin
 
 FA1: Full_adder port map ( A => op1(0),
 								  B => op2(0),
-								  C_in => C_in,
+								  C_in => '0',
 								  Sum => temp(0),
 								  C_out => carry_sig(0));
 								  
@@ -67,7 +66,6 @@ GEN1:
 C_out<=carry_sig(7);
 output<=temp;
 
-
-
 end Structural;
+
 

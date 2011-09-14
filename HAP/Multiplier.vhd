@@ -38,7 +38,6 @@ architecture Structural of Multiplier is
 component Adder8 is
     Port ( op1 : in  STD_LOGIC_VECTOR (7 downto 0);
            op2 : in  STD_LOGIC_VECTOR (7 downto 0);
-           C_in : in  STD_LOGIC;
            output : out  STD_LOGIC_VECTOR (7 downto 0);
            C_out : out  STD_LOGIC);
 end component;
@@ -71,7 +70,6 @@ MB1 <= "0000" & ag_a3b1 & ag_a2b1 & ag_a1b1 & ag_a0b1;
 
 Addblock1: Adder8 port map( op1 => MA1,
 									op2 => MB1,
-									C_in => '0',
 									output => tempout1,
 									C_out => carry1);
 
@@ -90,7 +88,6 @@ MB2 <= "0000" & ag_a3b2 & ag_a2b2 & ag_a1b2 & ag_a0b2;
 
 Addblock2: Adder8 port map(op1 => MA2,
 									op2 => MB2,
-									C_in => '0',
 									output => tempout2,
 									C_out => carry2);
 
@@ -109,7 +106,6 @@ MB3 <= "0000" & ag_a3b3 & ag_a2b3 & ag_a1b3 & ag_a0b3;
 
 Addblock3: Adder8 port map(op1 => MA3,
 									op2 => MB3,
-									C_in => '0',
 									output => tempout3,
 									C_out => carry3);
 
