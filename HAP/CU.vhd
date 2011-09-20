@@ -140,7 +140,7 @@ case present_state is
 				elsif(opcodesig = "10111") then
 								ALUen <= "000";
 								PCen <= '0';
-								PCLen <= '1'; --tom
+								PCLen <= '1'; 
 								ROMen <= '0';
 								IRen <= '0';
 								GPRRen <= '1';
@@ -294,7 +294,7 @@ case present_state is
 							PCLen <= '0';
 					end case;
 						
-					next_state <= store;--tom
+					next_state <= store;
 							
 				---LI, 
 				elsif(opcodesig ="11010") then
@@ -350,7 +350,6 @@ case present_state is
 					PCen <='0';
 					GPRWen <='0';
 					GPRRen <= '0';
-					Mux2sel <= "11";
 				--load
 				elsif(opcodesig="11010") then
 					GPRWen <='1';
